@@ -265,9 +265,15 @@ class EmployeePayrollData {
 
     //getter and setter
     get name() { return this._name; }
-    set name(name) { this._name = name; }
-
-    //method
+    set name(name) { 
+        let nameRegex = new RegExp("^[A-Z]{1}[a-z]{3,}$");
+        if(nameRegex.test(name)){
+            this._name = name;
+        }
+        else{
+            throw "Name is incorrect format";
+        }
+    }
    //method
    toString(){
     const option = { year: 'numeric', month : 'long', day : 'numeric'};
