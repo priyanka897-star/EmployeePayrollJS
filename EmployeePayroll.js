@@ -184,94 +184,104 @@ console.log("Emp Wage Map totalHrs : " + Array.from(empDailyWageMap.values()).re
 const findTotal = (totalVal, dailyVal) => totalVal + dailyVal;
 const empDailyHrsMap = new Map();
 let count = 0;
-let totalHours = Array.from(empDailyHrsMap.values()).reduce(findTotal,0);
-let totalSalary = empDailyWageArr.filter(dailyWage => dailyWage > 0).reduce(findTotal,0)
-console.log("UC 9A Employee wage with arrow: Total Hours: "+totalHours+" Total Wages "+totalSalary);
+let totalHours = Array.from(empDailyHrsMap.values()).reduce(findTotal, 0);
+let totalSalary = empDailyWageArr.filter(dailyWage => dailyWage > 0).reduce(findTotal, 0)
+console.log("UC 9A Employee wage with arrow: Total Hours: " + totalHours + " Total Wages " + totalSalary);
 
 let nonWorkingDays = new Array();
 let partWorkingDays = new Array();
 let fullWorkingDays = new Array();
 
-empDailyHrsMap.forEach(  (value, key, map) => {
-    if ( value == 8 ) fullWorkingDays.push(key);
-    else if ( value == 4 ) partWorkingDays.push(key);
+empDailyHrsMap.forEach((value, key, map) => {
+    if (value == 8) fullWorkingDays.push(key);
+    else if (value == 4) partWorkingDays.push(key);
     else nonWorkingDays.push(key);
 });
 
-console.log("Non Working Days "+nonWorkingDays);
-console.log("Part Working Days "+partWorkingDays);
-console.log("Full Working Days "+fullWorkingDays);
+console.log("Non Working Days " + nonWorkingDays);
+console.log("Part Working Days " + partWorkingDays);
+console.log("Full Working Days " + fullWorkingDays);
 
 //UC10
 //UC 10 Object Creation
 
 totalEmpHrs = 0;
- let totalWorkingdays = 0;
+let totalWorkingdays = 0;
 let empDailyHrsAndWageArr = new Array();
-while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingdays <=NUM_OF_WORKING_DAYS){
+while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingdays <= NUM_OF_WORKING_DAYS) {
     totalWorkingdays++;
-    empCheck = Math.floor((Math.random()*10)%3);
+    empCheck = Math.floor((Math.random() * 10) % 3);
     const empHrs = getWorkingHours(empCheck);
     totalEmpHrs += empHrs;
     empDailyHrsAndWageArr.push({
         dayNum: totalWorkingdays,
-        dailyHours:empHrs,
+        dailyHours: empHrs,
         dailyWage: calDailyWage(empHrs),
-        toString(){
-            return '\nDay '+this.dayNum+' => working Hours is '+this.dailyHours+' And Wage Earned = '+this.dailyWage
+        toString() {
+            return '\nDay ' + this.dayNum + ' => working Hours is ' + this.dailyHours + ' And Wage Earned = ' + this.dailyWage
         }
     });
 }
-console.log("UC 10 Showing daily hours worked and wage earned: "+empDailyHrsAndWageArr);
+console.log("UC 10 Showing daily hours worked and wage earned: " + empDailyHrsAndWageArr);
 
 //UC 11 Object operation using Arrow function
-let totalWagess = empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyWage>0)
-                .reduce((totalWage, dailyHrsAndWage) => totalWage += dailyHrsAndWage.dailyWage, 0);
-let TotalHours = empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyHours>0)
-                .reduce((totalHours, dailyHrsAndWage) => totalHours += dailyHrsAndWage.dailyHours,0);
-console.log("UC 11A Total hours "+TotalHours+" Total Wages : "+totalWagess);
+let totalWagess = empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyWage > 0)
+    .reduce((totalWage, dailyHrsAndWage) => totalWage += dailyHrsAndWage.dailyWage, 0);
+let TotalHours = empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyHours > 0)
+    .reduce((totalHours, dailyHrsAndWage) => totalHours += dailyHrsAndWage.dailyHours, 0);
+console.log("UC 11A Total hours " + TotalHours + " Total Wages : " + totalWagess);
 
 console.log("UC 11B Loggin full working days");
 empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyHours == 8).
-forEach(dailyHrsAndWage => console.log(dailyHrsAndWage.toString()));
+    forEach(dailyHrsAndWage => console.log(dailyHrsAndWage.toString()));
 
 let partWorkingDayStrArr = empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyHours == 4).
-forEach(dailyHrsAndWage => dailyHrsAndWage.toString());
+    forEach(dailyHrsAndWage => dailyHrsAndWage.toString());
 //UC11C
-console.log("\nUC 11C part time working string "+partWorkingDayStrArr);
+console.log("\nUC 11C part time working string " + partWorkingDayStrArr);
 
 let nonworkingDayStrArr = empDailyHrsAndWageArr.filter(dailyHrsAndWage => dailyHrsAndWage.dailyHours == 0)
-.forEach(dailyHrsAndWage => dailyHrsAndWage.toString());
-console.log("\nUC 11D No working days "+nonworkingDayStrArr);
+    .forEach(dailyHrsAndWage => dailyHrsAndWage.toString());
+console.log("\nUC 11D No working days " + nonworkingDayStrArr);
 
-//UC11 Employee Wage With Class
+// Refactored UC11 Employee Wage With Class
 
 
-    class EmployeePayrollData {
-        //property
-        id;
-        salary;
-    
-        //constructor
-        constructor(id, name, salary){
-            this.id = id;
-            this.name = name;
-            this.salary = salary;
-        }
-    
-        //getter and setter
-        get name() { return this._name;}
-        set name(name) {this._name = name;}
-    
-        //method
-        toString(){
-            return "id ="+this.id+", name = "+this.name+", salary = "+this.salary;
-        }
+class EmployeePayrollData {
+    //property
+    id;
+    salary;
+    gender;
+    startDate;
+
+    //constructor
+    constructor(...params) {
+        this.id = params[0];
+        this.name = params[1];
+        this.salary = params[2];
+        this.gender = params[3];
+        this.startDate = params[4];
     }
-    let employeePayrollData = new EmployeePayrollData(1,"Priyanka",50000);
-    console.log(employeePayrollData.toString());
-    employeePayrollData.name = "Neha";
-    console.log(employeePayrollData.toString());
+
+    //getter and setter
+    get name() { return this._name; }
+    set name(name) { this._name = name; }
+
+    //method
+   //method
+   toString(){
+    const option = { year: 'numeric', month : 'long', day : 'numeric'};
+    const empDate = this.startDate === undefined ? "undefined" : this.startDate.toLocaleDateString("en-US",option);
+    return "id ="+this.id+", name = "+this.name+", salary = "+this.salary+", gender = "+this.gender+", startDate "+empDate;
+}
+}
+let employeePayrollData = new EmployeePayrollData(1, "Priyanka", 50000,"Female",new Date());
+console.log(employeePayrollData.toString());
+employeePayrollData.name = "Neha";
+console.log(employeePayrollData.toString());
+let newemployeePayrollData = new EmployeePayrollData(2,"Terissa",70000,"Female",new Date());
+console.log(newemployeePayrollData.toString());
+
 
 
 
